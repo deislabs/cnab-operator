@@ -61,6 +61,14 @@ required = [
   branch = "master" #osdk_branch_annotation
   # version = "=v0.7.0" #osdk_version_annotation
 
+[[constraint]]
+  name = "github.com/radu-matei/coras"
+  branch = "update-image-relocation"
+
+[[override]]
+  name = "github.com/docker/docker"
+  revision = "8a43b7bb99cd1eedc3aca61fbc3ccfba6b75c209"
+
 [prune]
   go-tests = true
   non-go = true

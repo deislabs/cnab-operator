@@ -18,6 +18,17 @@
   version = "v0.4.12"
 
 [[projects]]
+  branch = "master"
+  digest = "1:81f8c061c3d18ed1710957910542bc17d2b789c6cd19e0f654c30b35fd255ca5"
+  name = "github.com/Azure/go-ansiterm"
+  packages = [
+    ".",
+    "winterm",
+  ]
+  pruneopts = "NT"
+  revision = "d6e3b3328b783f23731bc4d058875b0371ff8109"
+
+[[projects]]
   digest = "1:14f0a1264c1013e381bf771317cfd382c60c663b72053e27e050690c19ee004d"
   name = "github.com/Azure/go-autorest"
   packages = [
@@ -31,6 +42,14 @@
   pruneopts = "NT"
   revision = "fe1ebaab71ae2a2ab8a55f62ebe54cffd842acc2"
   version = "v12.0.0"
+
+[[projects]]
+  digest = "1:a02c9295ee6584bf7d7b420519b06f91a7c00ac1dca8de84f9597878545080a7"
+  name = "github.com/Microsoft/go-winio"
+  packages = ["."]
+  pruneopts = "NT"
+  revision = "1a8911d1ed007260465c3bfbbc785ac6915a0bb8"
+  version = "v0.4.12"
 
 [[projects]]
   digest = "1:0a111edd8693fd977f42a0c4f199a0efb13c20aec9da99ad8830c7bb6a87e8d6"
@@ -80,6 +99,31 @@
   version = "v0.2.0"
 
 [[projects]]
+  digest = "1:e364d02fe45f24aafdd813317d8958071e74e7895963d3638bd5ac56e4141961"
+  name = "github.com/containerd/containerd"
+  packages = [
+    "content",
+    "errdefs",
+    "images",
+    "log",
+    "platforms",
+    "reference",
+    "remotes",
+    "remotes/docker",
+  ]
+  pruneopts = "NT"
+  revision = "894b81a4b802e4eb2a91d1ce216b8817763c29fb"
+  version = "v1.2.6"
+
+[[projects]]
+  branch = "master"
+  digest = "1:ccbffb4a7eeb06e7fd2238d8908eb7718f41c62f18ddbb70d1bf10cd791f829e"
+  name = "github.com/containerd/continuity"
+  packages = ["pathdriver"]
+  pruneopts = "NT"
+  revision = "aaeac12a7ffcd198ae25440a9dff125c2e2703a7"
+
+[[projects]]
   digest = "1:0c4193043b1a33c7f9ba4ea42b8af2c09bb3d51970212d42e4dac8aa217b4ca5"
   name = "github.com/coreos/prometheus-operator"
   packages = [
@@ -101,12 +145,147 @@
   version = "v1.1.1"
 
 [[projects]]
+  branch = "master"
+  digest = "1:cd9d8ce78d6f57728ebf25da5a956c2c0d4c730ff85033870308fef96da25ef5"
+  name = "github.com/deislabs/cnab-go"
+  packages = ["bundle"]
+  pruneopts = "NT"
+  revision = "7cd944a8ee450ee465795d21ad7302bed34ad1b0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:9f9b67ae8acb8dd5b6fe65f4d2c3ef446117a1c08566a7b873b7c2b475dec310"
+  name = "github.com/deislabs/oras"
+  packages = [
+    "pkg/auth",
+    "pkg/auth/docker",
+    "pkg/content",
+    "pkg/oras",
+  ]
+  pruneopts = "NT"
+  revision = "39de0678ff2995b33cb8c7ba7430042a836737bb"
+
+[[projects]]
   digest = "1:3a5601f7ac7fc10fc2a98039b18d83a767f3830141a08c19ae45c45244f43e57"
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
   pruneopts = "NT"
   revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
   version = "v3.2.0"
+
+[[projects]]
+  digest = "1:1aac6a60836d07bdf53992a5cd0a003b6b4106cfaa113d4d0f8d03e7bade9559"
+  name = "github.com/docker/cli"
+  packages = [
+    "cli/config",
+    "cli/config/configfile",
+    "cli/config/credentials",
+    "opts",
+  ]
+  pruneopts = "NT"
+  revision = "c89750f836c57ce10386e71669e1b08a54c3caeb"
+  version = "v18.09.5"
+
+[[projects]]
+  digest = "1:91fb48882bdb6479c511b1d8c07ccf83b84c8c956870fe61daf7e82fe089aa51"
+  name = "github.com/docker/distribution"
+  packages = [
+    ".",
+    "digestset",
+    "metrics",
+    "reference",
+    "registry/api/errcode",
+    "registry/api/v2",
+    "registry/client",
+    "registry/client/auth",
+    "registry/client/auth/challenge",
+    "registry/client/transport",
+    "registry/storage/cache",
+    "registry/storage/cache/memory",
+  ]
+  pruneopts = "NT"
+  revision = "2461543d988979529609e8cb6fca9ca190dc48da"
+  version = "v2.7.1"
+
+[[projects]]
+  digest = "1:fffeb215fd8a5f9140b9e56346c9b8b5bb01f13f945f4f15f5d41fcda60a970f"
+  name = "github.com/docker/docker"
+  packages = [
+    "api/types",
+    "api/types/blkiodev",
+    "api/types/container",
+    "api/types/filters",
+    "api/types/mount",
+    "api/types/network",
+    "api/types/registry",
+    "api/types/strslice",
+    "api/types/swarm",
+    "api/types/swarm/runtime",
+    "api/types/versions",
+    "errdefs",
+    "pkg/homedir",
+    "pkg/idtools",
+    "pkg/ioutils",
+    "pkg/jsonmessage",
+    "pkg/longpath",
+    "pkg/mount",
+    "pkg/stringid",
+    "pkg/system",
+    "pkg/tarsum",
+    "pkg/term",
+    "pkg/term/windows",
+    "registry",
+    "registry/resumable",
+  ]
+  pruneopts = "NT"
+  revision = "8a43b7bb99cd1eedc3aca61fbc3ccfba6b75c209"
+
+[[projects]]
+  digest = "1:e13f68269a2c44e56225026d5952bd375efc81379fcf2cde65b091dc0b76398e"
+  name = "github.com/docker/docker-credential-helpers"
+  packages = [
+    "client",
+    "credentials",
+  ]
+  pruneopts = "NT"
+  revision = "8a9f93a99ff87f416cc79f267c68151af0026f60"
+  version = "v0.6.2"
+
+[[projects]]
+  digest = "1:44fd27d0559326eb63ee0b7b5c80832c821761ff6d1b9cc4ad075783485a5837"
+  name = "github.com/docker/go"
+  packages = ["canonical/json"]
+  pruneopts = "NT"
+  revision = "62e5ec7cf43f795986ec658df7cb317255772993"
+  version = "v1.5.1-1"
+
+[[projects]]
+  digest = "1:4e8034b090a97144c26f21ca1090859e7d700a02ea2c30a54c7f2a669d790857"
+  name = "github.com/docker/go-connections"
+  packages = [
+    "nat",
+    "sockets",
+    "tlsconfig",
+  ]
+  pruneopts = "NT"
+  revision = "7395e3f8aa162843a74ed6d48e79627d9792ac55"
+  version = "v0.4.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:c49ecccb8abda39a5a48a99267d6abfdf37f59f1c7fdbcbe04b3b9afc3ab625d"
+  name = "github.com/docker/go-metrics"
+  packages = ["."]
+  pruneopts = "NT"
+  revision = "b84716841b82eab644a0c64fc8b42d480e49add5"
+
+[[projects]]
+  digest = "1:97176fe8a268479a527d08df458c269dc27abf59c1643807d4e36398cbd9ef2d"
+  name = "github.com/docker/go-units"
+  packages = ["."]
+  pruneopts = "NT"
+  revision = "519db1ee28dcc9fd2474ae59fca29a810482bfb1"
+  version = "v0.4.0"
 
 [[projects]]
   digest = "1:1302bdd23af4264a095d48c2c28660a8ecf2e02454ce172cef5cb946029a1383"
@@ -240,6 +419,26 @@
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:f08cbdb26b6c6a1cf1c53294cc6d405758ece59c87a74ce88ae1565f0259c40a"
+  name = "github.com/google/go-containerregistry"
+  packages = [
+    "pkg/authn",
+    "pkg/name",
+    "pkg/v1",
+    "pkg/v1/empty",
+    "pkg/v1/layout",
+    "pkg/v1/partial",
+    "pkg/v1/random",
+    "pkg/v1/remote",
+    "pkg/v1/remote/transport",
+    "pkg/v1/types",
+    "pkg/v1/v1util",
+  ]
+  pruneopts = "NT"
+  revision = "b6d875c30fe7d51e952909e585882149f6fedf74"
+
+[[projects]]
   digest = "1:52c5834e2bebac9030c97cc0798ac11c3aa8a39f098aeb419f142533da6cd3cc"
   name = "github.com/google/gofuzz"
   packages = ["."]
@@ -282,6 +481,14 @@
   ]
   pruneopts = "NT"
   revision = "e0311c0920d47879e99ac9826142bc097eacd5b7"
+
+[[projects]]
+  digest = "1:f03d1f27dee54a6f51200778991db9b7a91e9d9cc42395ba813fc9efc490a9a2"
+  name = "github.com/gorilla/mux"
+  packages = ["."]
+  pruneopts = "NT"
+  revision = "c5c6c98bc25355028a63748a498942a6398ccd22"
+  version = "v1.7.1"
 
 [[projects]]
   branch = "master"
@@ -342,6 +549,14 @@
   version = "v1.1.6"
 
 [[projects]]
+  digest = "1:58999a98719fddbac6303cb17e8d85b945f60b72f48e3a2df6b950b97fa926f1"
+  name = "github.com/konsorten/go-windows-terminal-sequences"
+  packages = ["."]
+  pruneopts = "NT"
+  revision = "f55edac94c9bbba5d6182a4be46d86a2c9b5b50e"
+  version = "v1.0.2"
+
+[[projects]]
   branch = "master"
   digest = "1:782fb677791a7fe7b5b8e637bcf695efb13950ce09e3e8e3b1cf21c57649be7c"
   name = "github.com/mailru/easyjson"
@@ -387,6 +602,41 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:8c33af6454f65c8b754aa02cc6f9da19612b190898bcd415f5fcd558f8b13050"
+  name = "github.com/morikuni/aec"
+  packages = ["."]
+  pruneopts = "NT"
+  revision = "39771216ff4c63d11f5e604076f9c45e8be1067b"
+
+[[projects]]
+  digest = "1:e0cc8395ea893c898ff5eb0850f4d9851c1f57c78c232304a026379a47a552d0"
+  name = "github.com/opencontainers/go-digest"
+  packages = ["."]
+  pruneopts = "NT"
+  revision = "279bed98673dd5bef374d3b6e4b09e2af76183bf"
+  version = "v1.0.0-rc1"
+
+[[projects]]
+  digest = "1:6a42064e69dda8ba8b3687f837719fb8e241986c54ad4515e55ea9ec11bf5242"
+  name = "github.com/opencontainers/image-spec"
+  packages = [
+    "specs-go",
+    "specs-go/v1",
+  ]
+  pruneopts = "NT"
+  revision = "d60099175f88c47cd379c4738d158884749ed235"
+  version = "v1.0.1"
+
+[[projects]]
+  digest = "1:d0706514d296daeaad5a3ad9794fcb1ae56d0d295e281809fe8b3dd829a79bc7"
+  name = "github.com/opencontainers/runc"
+  packages = ["libcontainer/user"]
+  pruneopts = "NT"
+  revision = "baf6536d6259209c3edfa2b22237af82942d3dfa"
+  version = "v0.1.1"
+
+[[projects]]
+  branch = "master"
   digest = "1:ba4b6043d6d1629acd451befb1fc3a41b169a275406e7f52bc4bfe00a8afedc3"
   name = "github.com/operator-framework/operator-sdk"
   packages = [
@@ -423,6 +673,17 @@
   pruneopts = "NT"
   revision = "0be1b92a6df0e4f5cb0a5d15fb7f643d0ad93ce6"
   version = "v3.0.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:90faee251232c19e413b3867de60d45daf617d522f3e56fc40ab716121755b62"
+  name = "github.com/pivotal/image-relocation"
+  packages = [
+    "pkg/image",
+    "pkg/registry",
+  ]
+  pruneopts = "NT"
+  revision = "602e781a6af21fc57df3a3cea0576397b39bd49b"
 
 [[projects]]
   digest = "1:14715f705ff5dfe0ffd6571d7d201dd8e921030f8070321a79380d8ca4ec1a24"
@@ -473,6 +734,14 @@
   revision = "87a4384529e0652f5035fb5cc8095faf73ea9b0b"
 
 [[projects]]
+  branch = "update-image-relocation"
+  digest = "1:3f900e5058da513dfc6013f4409e189009c2bda3c94f858318d3355a0c235ae7"
+  name = "github.com/radu-matei/coras"
+  packages = ["pkg/coras"]
+  pruneopts = "NT"
+  revision = "9acccec848d196b4643a11c310a79bcab601dfab"
+
+[[projects]]
   digest = "1:a4644e85e1f29f9825a4e61dcdd8244fe7c4db02eead3f508d5a5bdf7924dbbd"
   name = "github.com/rogpeppe/go-internal"
   packages = [
@@ -483,6 +752,14 @@
   pruneopts = "NT"
   revision = "438578804ca6f31be148c27683afc419ce47c06e"
   version = "v1.3.0"
+
+[[projects]]
+  digest = "1:587d2e689ba400b9e4687ed2f02074fbc07fb33fd5ef72d22b5d68ae470f1267"
+  name = "github.com/sirupsen/logrus"
+  packages = ["."]
+  pruneopts = "NT"
+  revision = "8bdbc7bcc01dcbb8ec23dc8a28e332258d25251f"
+  version = "v1.4.1"
 
 [[projects]]
   digest = "1:49b6e0d199dc20969bf7c9d14647313e1dd1b102178fad4ca999d8a9584edfab"
@@ -580,7 +857,9 @@
     "http2",
     "http2/hpack",
     "idna",
+    "internal/socks",
     "internal/timeseries",
+    "proxy",
     "trace",
   ]
   pruneopts = "NT"
@@ -604,7 +883,10 @@
   branch = "master"
   digest = "1:bde1844fd8dff0a4ed259e24bf0e3cb91c2bc7bc3cd0a43118c6ef8f8be1b9ca"
   name = "golang.org/x/sync"
-  packages = ["semaphore"]
+  packages = [
+    "errgroup",
+    "semaphore",
+  ]
   pruneopts = "NT"
   revision = "112230192c580c3556b8cee6403af37a4fc5f28c"
 
@@ -1027,15 +1309,25 @@
     "pkg/client",
     "pkg/client/apiutil",
     "pkg/client/config",
+    "pkg/controller",
+    "pkg/event",
+    "pkg/handler",
+    "pkg/internal/controller",
+    "pkg/internal/controller/metrics",
     "pkg/internal/recorder",
     "pkg/leaderelection",
     "pkg/manager",
     "pkg/metrics",
     "pkg/patch",
+    "pkg/predicate",
+    "pkg/reconcile",
     "pkg/recorder",
     "pkg/runtime/inject",
     "pkg/runtime/log",
+    "pkg/runtime/scheme",
     "pkg/runtime/signals",
+    "pkg/source",
+    "pkg/source/internal",
     "pkg/webhook/admission",
     "pkg/webhook/admission/types",
     "pkg/webhook/internal/metrics",
@@ -1071,14 +1363,20 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/go-openapi/spec",
     "github.com/operator-framework/operator-sdk/pkg/k8sutil",
     "github.com/operator-framework/operator-sdk/pkg/leader",
     "github.com/operator-framework/operator-sdk/pkg/log/zap",
     "github.com/operator-framework/operator-sdk/pkg/metrics",
     "github.com/operator-framework/operator-sdk/pkg/restmapper",
     "github.com/operator-framework/operator-sdk/version",
+    "github.com/radu-matei/coras/pkg/coras",
     "github.com/spf13/pflag",
+    "k8s.io/api/core/v1",
+    "k8s.io/apimachinery/pkg/api/errors",
+    "k8s.io/apimachinery/pkg/apis/meta/v1",
     "k8s.io/apimachinery/pkg/runtime",
+    "k8s.io/apimachinery/pkg/runtime/schema",
     "k8s.io/client-go/plugin/pkg/client/auth",
     "k8s.io/code-generator/cmd/client-gen",
     "k8s.io/code-generator/cmd/conversion-gen",
@@ -1087,10 +1385,17 @@
     "k8s.io/code-generator/cmd/lister-gen",
     "k8s.io/gengo/args",
     "k8s.io/kube-openapi/cmd/openapi-gen",
+    "k8s.io/kube-openapi/pkg/common",
+    "sigs.k8s.io/controller-runtime/pkg/client",
     "sigs.k8s.io/controller-runtime/pkg/client/config",
+    "sigs.k8s.io/controller-runtime/pkg/controller",
+    "sigs.k8s.io/controller-runtime/pkg/handler",
     "sigs.k8s.io/controller-runtime/pkg/manager",
+    "sigs.k8s.io/controller-runtime/pkg/reconcile",
     "sigs.k8s.io/controller-runtime/pkg/runtime/log",
+    "sigs.k8s.io/controller-runtime/pkg/runtime/scheme",
     "sigs.k8s.io/controller-runtime/pkg/runtime/signals",
+    "sigs.k8s.io/controller-runtime/pkg/source",
     "sigs.k8s.io/controller-tools/pkg/crd/generator",
   ]
   solver-name = "gps-cdcl"
