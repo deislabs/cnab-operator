@@ -1,0 +1,7 @@
+apiVersion: cnab.io/v1alpha1
+kind: Bundle
+metadata:
+  name: example-bundle
+spec:
+  name: testing-bundle
+  url: https://remote-oci-registry.io/testing-bundle:v1
