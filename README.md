@@ -1,5 +1,9 @@
 # CNAB Operator
 
+🚨 This is super top secret pre-ralpha software. We would love for your to try
+it out but it probably doesn't work yet! It is just public because we love
+open-source so much private repos weird us out. 🚨
+
 ## Running locally
 
 ### Prerequisites
@@ -45,7 +49,7 @@ WARN[0003] encountered unknown type application/vnd.cnab.bundle.thin.v1-wd+json;
 
 ## Running in a Kubernetes cluster
 
-WIP.
+WIP it. WIP it good. 😎
 
 [operator_sdk_tool]: https://github.com/operator-framework/operator-sdk
 [dep_tool]:https://golang.github.io/dep/docs/installation.html
