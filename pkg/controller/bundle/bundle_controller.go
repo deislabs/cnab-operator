@@ -2,10 +2,12 @@ package bundle
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
 	cnabv1alpha1 "github.com/deislabs/cnab-operator/pkg/apis/cnab/v1alpha1"
+	"github.com/radu-matei/coras/pkg/coras"
 
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -101,12 +103,27 @@ func (r *ReconcileBundle) Reconcile(request reconcile.Request) (reconcile.Result
 	}
 
 	log.Info(fmt.Sprintf("Reconciliating for bundle: %v from %v", instance.Spec.Name, instance.Spec.URL))
-
+	printBundle(instance)
 	// Once we have an application, we want to constantly check the registry for newer versions.
 	// TODO - @radu-matei
 	//
 	// check if there is another way to periodically check resources.
 	return reconcile.Result{RequeueAfter: 10 * time.Second}, nil
+}
+
+func printBundle(instance *cnabv1alpha1.Bundle) error {
+	b, err := coras.PullBundle(instance.Spec.URL)
+	if err != nil {
+		return fmt.Errorf("cannot pull bundle: %v", err)
+	}
+
+	data, err := json.Marshal(b)
+	if err != nil {
+		return fmt.Errorf("cannot marshal bundle: %v", err)
+	}
+
+	log.Info(fmt.Sprintf("Pulled bundle from OCI registry: %s", data))
+	return nil
 }
 
 // newPodForCR returns a busybox pod with the same name/namespace as the cr
