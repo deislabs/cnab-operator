@@ -1,4 +1,4 @@
-package cnab
+package claimstore
 
 import (
 	"context"
@@ -23,19 +23,19 @@ const ClaimKey = "claim"
 // TODO - @radu-matei
 // decide if storing claims is better suited for a CRD.
 // See https://github.com/deislabs/cnab-operator/issues/8
-type ConfigMapStore struct {
+type configMapStore struct {
 	namespace string
 	client    client.Client
 }
 
 // NewConfigMapStore returns a new claim store
 // backed by Kubernetes ConfigMaps
-func NewConfigMapStore() crud.Store {
-	return &ConfigMapStore{}
+func NewConfigMapStore(namespace string, client client.Client) crud.Store {
+	return &configMapStore{namespace: namespace, client: client}
 }
 
 // List returns all claims in the operator namespace
-func (s *ConfigMapStore) List() ([]string, error) {
+func (s *configMapStore) List() ([]string, error) {
 	otps := &client.ListOptions{}
 	otps.InNamespace(s.namespace)
 	otps.SetLabelSelector(ClaimLabelSelector)
@@ -57,14 +57,13 @@ func (s *ConfigMapStore) List() ([]string, error) {
 }
 
 // Store saves a new claim as a Kubernetes ConfigMap
-//
-func (s *ConfigMapStore) Store(name string, data []byte) error {
+func (s *configMapStore) Store(name string, data []byte) error {
 	cm := &corev1.ConfigMap{}
 	key := client.ObjectKey{Name: name, Namespace: s.namespace}
 	err := s.client.Get(context.Background(), key, cm)
 	if err != nil {
 		if errors.IsNotFound(err) {
-			return s.createConfigMap(name, data)
+			return s.createConfigMap(name, s.namespace, data)
 		}
 		return err
 	}
@@ -72,7 +71,7 @@ func (s *ConfigMapStore) Store(name string, data []byte) error {
 }
 
 // Read returns the value of a claim, or error if it doesn't exist
-func (s *ConfigMapStore) Read(name string) ([]byte, error) {
+func (s *configMapStore) Read(name string) ([]byte, error) {
 	cm := &corev1.ConfigMap{}
 	key := client.ObjectKey{Name: name, Namespace: s.namespace}
 	err := s.client.Get(context.Background(), key, cm)
@@ -84,7 +83,7 @@ func (s *ConfigMapStore) Read(name string) ([]byte, error) {
 }
 
 // Delete removes a claim from the Kubernetes ConfigMaps
-func (s *ConfigMapStore) Delete(name string) error {
+func (s *configMapStore) Delete(name string) error {
 	cm := &corev1.ConfigMap{}
 	key := client.ObjectKey{Name: name, Namespace: s.namespace}
 	err := s.client.Get(context.Background(), key, cm)
@@ -95,10 +94,11 @@ func (s *ConfigMapStore) Delete(name string) error {
 	return s.client.Delete(context.Background(), cm, client.GracePeriodSeconds(5))
 }
 
-func (s *ConfigMapStore) createConfigMap(name string, data []byte) error {
+func (s *configMapStore) createConfigMap(name string, namespace string, data []byte) error {
 	cm := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: name,
+			Name:      name,
+			Namespace: namespace,
 		},
 		BinaryData: map[string][]byte{
 			ClaimKey: data,
@@ -108,7 +108,11 @@ func (s *ConfigMapStore) createConfigMap(name string, data []byte) error {
 	return s.client.Create(context.Background(), cm)
 }
 
-func (s *ConfigMapStore) updateConfigMap(cm *corev1.ConfigMap, data []byte) error {
+// TODO - @radu-matei
+//
+// Should consumers of this package be able to change the name of a claim
+// and store it back? Under the current ConfigMap store logic, it becomes another claim
+func (s *configMapStore) updateConfigMap(cm *corev1.ConfigMap, data []byte) error {
 	cm.BinaryData[ClaimKey] = data
 	return s.client.Update(context.Background(), cm)
 }
