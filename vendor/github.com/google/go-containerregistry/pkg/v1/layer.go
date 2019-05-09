@@ -16,8 +16,6 @@ package v1
 
 import (
 	"io"
-
-	"github.com/google/go-containerregistry/pkg/v1/types"
 )
 
 // Layer is an interface for accessing the properties of a particular layer of a v1.Image
@@ -36,7 +34,4 @@ type Layer interface {
 
 	// Size returns the compressed size of the Layer.
 	Size() (int64, error)
-
-	// MediaType returns the media type of the Layer.
-	MediaType() (types.MediaType, error)
 }

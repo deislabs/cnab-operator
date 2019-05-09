@@ -56,6 +56,7 @@ type imageOpener struct {
 	auth      authn.Authenticator
 	transport http.RoundTripper
 	ref       name.Reference
+	client    *http.Client
 	platform  v1.Platform
 }
 

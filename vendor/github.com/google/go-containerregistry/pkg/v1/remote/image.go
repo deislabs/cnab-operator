@@ -15,7 +15,6 @@
 package remote
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -150,22 +149,6 @@ func (rl *remoteLayer) Compressed() (io.ReadCloser, error) {
 // Manifest implements partial.WithManifest so that we can use partial.BlobSize below.
 func (rl *remoteLayer) Manifest() (*v1.Manifest, error) {
 	return partial.Manifest(rl.ri)
-}
-
-// MediaType implements v1.Layer
-func (rl *remoteLayer) MediaType() (types.MediaType, error) {
-	m, err := rl.Manifest()
-	if err != nil {
-		return "", err
-	}
-
-	for _, layer := range m.Layers {
-		if layer.Digest == rl.digest {
-			return layer.MediaType, nil
-		}
-	}
-
-	return "", fmt.Errorf("unable to find layer with digest: %v", rl.digest)
 }
 
 // Size implements partial.CompressedLayer

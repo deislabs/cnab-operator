@@ -18,7 +18,6 @@ import (
 	"io"
 
 	v1 "github.com/google/go-containerregistry/pkg/v1"
-	"github.com/google/go-containerregistry/pkg/v1/types"
 	"github.com/google/go-containerregistry/pkg/v1/v1util"
 )
 
@@ -33,9 +32,6 @@ type CompressedLayer interface {
 
 	// Size returns the compressed size of the Layer.
 	Size() (int64, error)
-
-	// Returns the mediaType for the compressed Layer
-	MediaType() (types.MediaType, error)
 }
 
 // compressedLayerExtender implements v1.Image using the compressed base properties.

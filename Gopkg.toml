@@ -66,6 +66,10 @@ required = [
   branch = "update-image-relocation"
 
 [[override]]
+  name = "github.com/google/go-containerregistry"
+  revision = "5296537b6d5d12241dd0a8b1ef70a59cba62f48c"
+
+[[override]]
   name = "github.com/docker/docker"
   revision = "8a43b7bb99cd1eedc3aca61fbc3ccfba6b75c209"
 
