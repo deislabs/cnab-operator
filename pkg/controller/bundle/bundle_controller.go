@@ -7,11 +7,10 @@ import (
 	"time"
 
 	cnabv1alpha1 "github.com/deislabs/cnab-operator/pkg/apis/cnab/v1alpha1"
-	"github.com/radu-matei/coras/pkg/coras"
 
+	"github.com/radu-matei/coras/pkg/coras"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
@@ -124,27 +123,4 @@ func printBundle(instance *cnabv1alpha1.Bundle) error {
 
 	log.Info(fmt.Sprintf("Pulled bundle from OCI registry: %s", data))
 	return nil
-}
-
-// newPodForCR returns a busybox pod with the same name/namespace as the cr
-func newPodForCR(cr *cnabv1alpha1.Bundle) *corev1.Pod {
-	labels := map[string]string{
-		"app": cr.Name,
-	}
-	return &corev1.Pod{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      cr.Name + "-pod",
-			Namespace: cr.Namespace,
-			Labels:    labels,
-		},
-		Spec: corev1.PodSpec{
-			Containers: []corev1.Container{
-				{
-					Name:    "busybox",
-					Image:   "busybox",
-					Command: []string{"sleep", "3600"},
-				},
-			},
-		},
-	}
 }
