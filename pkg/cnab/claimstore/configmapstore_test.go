@@ -94,6 +94,9 @@ func TestUpdateClaim(t *testing.T) {
 func TestDeleteClaim(t *testing.T) {
 	s := newPopulatedFakeStore()
 	err := s.Delete("foo")
+	if err != nil {
+		t.Fatalf("cannot delete claim: %v", err)
+	}
 
 	claims, err := s.ReadAll()
 	if err != nil {
