@@ -20,18 +20,15 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
 	"github.com/google/go-containerregistry/pkg/v1/remote/transport"
 )
 
 // Delete removes the specified image reference from the remote registry.
-func Delete(ref name.Reference, options ...Option) error {
-	o, err := makeOptions(ref.Context().Registry, options...)
-	if err != nil {
-		return err
-	}
+func Delete(ref name.Reference, auth authn.Authenticator, t http.RoundTripper) error {
 	scopes := []string{ref.Scope(transport.DeleteScope)}
-	tr, err := transport.New(ref.Context().Registry, o.auth, o.transport, scopes)
+	tr, err := transport.New(ref.Context().Registry, auth, t, scopes)
 	if err != nil {
 		return err
 	}

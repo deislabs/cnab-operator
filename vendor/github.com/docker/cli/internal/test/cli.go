@@ -9,8 +9,11 @@ import (
 
 	"github.com/docker/cli/cli/command"
 	"github.com/docker/cli/cli/config/configfile"
+	"github.com/docker/cli/cli/context/docker"
+	"github.com/docker/cli/cli/context/store"
 	manifeststore "github.com/docker/cli/cli/manifest/store"
 	registryclient "github.com/docker/cli/cli/registry/client"
+	"github.com/docker/cli/cli/streams"
 	"github.com/docker/cli/cli/trust"
 	clitypes "github.com/docker/cli/types"
 	"github.com/docker/docker/client"
@@ -27,10 +30,10 @@ type FakeCli struct {
 	command.DockerCli
 	client                        client.APIClient
 	configfile                    *configfile.ConfigFile
-	out                           *command.OutStream
+	out                           *streams.Out
 	outBuffer                     *bytes.Buffer
 	err                           *bytes.Buffer
-	in                            *command.InStream
+	in                            *streams.In
 	server                        command.ServerInfo
 	clientInfoFunc                clientInfoFuncType
 	notaryClientFunc              NotaryClientFuncType
@@ -38,6 +41,9 @@ type FakeCli struct {
 	registryClient                registryclient.RegistryClient
 	contentTrust                  bool
 	containerizedEngineClientFunc containerizedEngineFuncType
+	contextStore                  store.Store
+	currentContext                string
+	dockerEndpoint                docker.Endpoint
 }
 
 // NewFakeCli returns a fake for the command.Cli interface
@@ -46,10 +52,10 @@ func NewFakeCli(client client.APIClient, opts ...func(*FakeCli)) *FakeCli {
 	errBuffer := new(bytes.Buffer)
 	c := &FakeCli{
 		client:    client,
-		out:       command.NewOutStream(outBuffer),
+		out:       streams.NewOut(outBuffer),
 		outBuffer: outBuffer,
 		err:       errBuffer,
-		in:        command.NewInStream(ioutil.NopCloser(strings.NewReader(""))),
+		in:        streams.NewIn(ioutil.NopCloser(strings.NewReader(""))),
 		// Use an empty string for filename so that tests don't create configfiles
 		// Set cli.ConfigFile().Filename to a tempfile to support Save.
 		configfile: configfile.New(""),
@@ -61,7 +67,7 @@ func NewFakeCli(client client.APIClient, opts ...func(*FakeCli)) *FakeCli {
 }
 
 // SetIn sets the input of the cli to the specified ReadCloser
-func (c *FakeCli) SetIn(in *command.InStream) {
+func (c *FakeCli) SetIn(in *streams.In) {
 	c.in = in
 }
 
@@ -70,9 +76,29 @@ func (c *FakeCli) SetErr(err *bytes.Buffer) {
 	c.err = err
 }
 
+// SetOut sets the stdout stream for the cli to the specified io.Writer
+func (c *FakeCli) SetOut(out *streams.Out) {
+	c.out = out
+}
+
 // SetConfigFile sets the "fake" config file
 func (c *FakeCli) SetConfigFile(configfile *configfile.ConfigFile) {
 	c.configfile = configfile
+}
+
+// SetContextStore sets the "fake" context store
+func (c *FakeCli) SetContextStore(store store.Store) {
+	c.contextStore = store
+}
+
+// SetCurrentContext sets the "fake" current context
+func (c *FakeCli) SetCurrentContext(name string) {
+	c.currentContext = name
+}
+
+// SetDockerEndpoint sets the "fake" docker endpoint
+func (c *FakeCli) SetDockerEndpoint(ep docker.Endpoint) {
+	c.dockerEndpoint = ep
 }
 
 // Client returns a docker API client
@@ -81,7 +107,7 @@ func (c *FakeCli) Client() client.APIClient {
 }
 
 // Out returns the output stream (stdout) the cli should write on
-func (c *FakeCli) Out() *command.OutStream {
+func (c *FakeCli) Out() *streams.Out {
 	return c.out
 }
 
@@ -91,13 +117,28 @@ func (c *FakeCli) Err() io.Writer {
 }
 
 // In returns the input stream the cli will use
-func (c *FakeCli) In() *command.InStream {
+func (c *FakeCli) In() *streams.In {
 	return c.in
 }
 
 // ConfigFile returns the cli configfile object (to get client configuration)
 func (c *FakeCli) ConfigFile() *configfile.ConfigFile {
 	return c.configfile
+}
+
+// ContextStore returns the cli context store
+func (c *FakeCli) ContextStore() store.Store {
+	return c.contextStore
+}
+
+// CurrentContext returns the cli context
+func (c *FakeCli) CurrentContext() string {
+	return c.currentContext
+}
+
+// DockerEndpoint returns the current DockerEndpoint
+func (c *FakeCli) DockerEndpoint() docker.Endpoint {
+	return c.dockerEndpoint
 }
 
 // ServerInfo returns API server information for the server used by this client
@@ -182,4 +223,25 @@ func (c *FakeCli) NewContainerizedEngineClient(sockPath string) (clitypes.Contai
 // SetContainerizedEngineClient on the fake cli
 func (c *FakeCli) SetContainerizedEngineClient(containerizedEngineClientFunc containerizedEngineFuncType) {
 	c.containerizedEngineClientFunc = containerizedEngineClientFunc
+}
+
+// StackOrchestrator return the selected stack orchestrator
+func (c *FakeCli) StackOrchestrator(flagValue string) (command.Orchestrator, error) {
+	configOrchestrator := ""
+	if c.configfile != nil {
+		configOrchestrator = c.configfile.StackOrchestrator
+	}
+	ctxOrchestrator := ""
+	if c.currentContext != "" && c.contextStore != nil {
+		meta, err := c.contextStore.GetMetadata(c.currentContext)
+		if err != nil {
+			return "", err
+		}
+		context, err := command.GetDockerContext(meta)
+		if err != nil {
+			return "", err
+		}
+		ctxOrchestrator = string(context.StackOrchestrator)
+	}
+	return command.GetStackOrchestrator(flagValue, ctxOrchestrator, configOrchestrator, c.err)
 }

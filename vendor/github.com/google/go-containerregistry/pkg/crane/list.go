@@ -17,6 +17,7 @@ package crane
 import (
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
@@ -43,7 +44,12 @@ func ls(_ *cobra.Command, args []string) {
 		log.Fatalf("parsing repo %q: %v", r, err)
 	}
 
-	tags, err := remote.List(repo, remote.WithAuthFromKeychain(authn.DefaultKeychain))
+	auth, err := authn.DefaultKeychain.Resolve(repo.Registry)
+	if err != nil {
+		log.Fatalf("getting creds for %q: %v", repo, err)
+	}
+
+	tags, err := remote.List(repo, auth, http.DefaultTransport)
 	if err != nil {
 		log.Fatalf("reading tags for %q: %v", repo, err)
 	}

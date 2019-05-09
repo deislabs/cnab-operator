@@ -23,6 +23,7 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
 	v1 "github.com/google/go-containerregistry/pkg/v1"
 	"github.com/google/go-containerregistry/pkg/v1/partial"
@@ -51,10 +52,18 @@ type Descriptor struct {
 	platform v1.Platform
 }
 
+type imageOpener struct {
+	auth      authn.Authenticator
+	transport http.RoundTripper
+	ref       name.Reference
+	client    *http.Client
+	platform  v1.Platform
+}
+
 // Get returns a remote.Descriptor for the given reference. The response from
 // the registry is left un-interpreted, for the most part. This is useful for
 // querying what kind of artifact a reference represents.
-func Get(ref name.Reference, options ...Option) (*Descriptor, error) {
+func Get(ref name.Reference, options ...ImageOption) (*Descriptor, error) {
 	acceptable := []types.MediaType{
 		types.DockerManifestSchema2,
 		types.OCIManifestSchema1,
@@ -69,19 +78,26 @@ func Get(ref name.Reference, options ...Option) (*Descriptor, error) {
 
 // Handle options and fetch the manifest with the acceptable MediaTypes in the
 // Accept header.
-func get(ref name.Reference, acceptable []types.MediaType, options ...Option) (*Descriptor, error) {
-	o, err := makeOptions(ref.Context().Registry, options...)
-	if err != nil {
-		return nil, err
+func get(ref name.Reference, acceptable []types.MediaType, options ...ImageOption) (*Descriptor, error) {
+	i := &imageOpener{
+		auth:      authn.Anonymous,
+		transport: http.DefaultTransport,
+		ref:       ref,
+		platform:  defaultPlatform,
 	}
 
-	tr, err := transport.New(ref.Context().Registry, o.auth, o.transport, []string{ref.Scope(transport.PullScope)})
+	for _, option := range options {
+		if err := option(i); err != nil {
+			return nil, err
+		}
+	}
+	tr, err := transport.New(i.ref.Context().Registry, i.auth, i.transport, []string{i.ref.Scope(transport.PullScope)})
 	if err != nil {
 		return nil, err
 	}
 
 	f := fetcher{
-		Ref:    ref,
+		Ref:    i.ref,
 		Client: &http.Client{Transport: tr},
 	}
 
@@ -94,7 +110,7 @@ func get(ref name.Reference, acceptable []types.MediaType, options ...Option) (*
 		fetcher:    f,
 		Manifest:   b,
 		Descriptor: *desc,
-		platform:   o.platform,
+		platform:   i.platform,
 	}, nil
 }
 

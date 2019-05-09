@@ -22,7 +22,6 @@ import (
 	"os"
 
 	v1 "github.com/google/go-containerregistry/pkg/v1"
-	"github.com/google/go-containerregistry/pkg/v1/types"
 	"github.com/google/go-containerregistry/pkg/v1/v1util"
 )
 
@@ -62,10 +61,6 @@ func (l *layer) Uncompressed() (io.ReadCloser, error) {
 
 func (l *layer) Size() (int64, error) {
 	return l.size, nil
-}
-
-func (l *layer) MediaType() (types.MediaType, error) {
-	return types.DockerLayer, nil
 }
 
 // LayerFromFile returns a v1.Layer given a tarball

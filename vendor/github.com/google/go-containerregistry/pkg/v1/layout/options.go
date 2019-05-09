@@ -28,7 +28,10 @@ func WithURLs(urls []string) Option {
 		if desc.URLs == nil {
 			desc.URLs = []string{}
 		}
-		desc.URLs = append(desc.URLs, urls...)
+		for _, url := range urls {
+			desc.URLs = append(desc.URLs, url)
+		}
+
 		return nil
 	}
 }

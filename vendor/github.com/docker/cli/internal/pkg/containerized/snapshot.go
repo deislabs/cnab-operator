@@ -50,10 +50,6 @@ func WithUpgrade(i containerd.Image) containerd.UpdateContainerOpts {
 			return err
 		}
 		c.Image = i.Name()
-		err = updateConfig(c.ID, c.Image)
-		if err != nil {
-			return err
-		}
 		c.SnapshotKey = revision.Key
 		return nil
 	}
@@ -78,10 +74,6 @@ func WithRollback(ctx context.Context, client *containerd.Client, c *containers.
 		return fmt.Errorf("snapshot %s has an empty service image label", prev.Key)
 	}
 	c.Image = snapshotImage
-	err = updateConfig(c.ID, c.Image)
-	if err != nil {
-		return err
-	}
 	c.SnapshotKey = prev.Key
 	return nil
 }

@@ -17,6 +17,7 @@ package crane
 import (
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/google/go-containerregistry/pkg/authn"
 	"github.com/google/go-containerregistry/pkg/name"
@@ -85,7 +86,12 @@ func rebase(orig, oldBase, newBase, rebased string) {
 		log.Fatalf("digesting rebased: %v", err)
 	}
 
-	if err := remote.Write(rebasedTag, rebasedImg, remote.WithAuthFromKeychain(authn.DefaultKeychain)); err != nil {
+	auth, err := authn.DefaultKeychain.Resolve(rebasedTag.Context().Registry)
+	if err != nil {
+		log.Fatalf("getting creds for %q: %v", rebasedTag, err)
+	}
+
+	if err := remote.Write(rebasedTag, rebasedImg, auth, http.DefaultTransport); err != nil {
 		log.Fatalf("writing image %q: %v", rebasedTag, err)
 	}
 	fmt.Print(dig.String())

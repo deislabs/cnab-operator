@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package name defines structured types for representing image references.
 package name
 
 import (
