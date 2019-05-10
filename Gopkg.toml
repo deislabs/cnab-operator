@@ -63,7 +63,12 @@ required = [
 
 [[constraint]]
   name = "github.com/radu-matei/coras"
-  branch = "update-image-relocation"
+  branch = "update-cnab-go-dep"
+
+[[constraint]]
+  name = "github.com/deislabs/cnab-go"
+  source = "github.com/radu-matei/cnab-go"
+  branch = "add-duffle-types"
 
 [[override]]
   name = "github.com/google/go-containerregistry"

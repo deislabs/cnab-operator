@@ -17,10 +17,9 @@
 package registry
 
 import (
-	"fmt"
 	"os"
 
-	"github.com/google/go-containerregistry/pkg/v1"
+	v1 "github.com/google/go-containerregistry/pkg/v1"
 	"github.com/google/go-containerregistry/pkg/v1/empty"
 	"github.com/google/go-containerregistry/pkg/v1/layout"
 	"github.com/pivotal/image-relocation/pkg/image"
@@ -28,7 +27,6 @@ import (
 
 const (
 	outputDirPermissions = 0755
-	refNameAnnotation    = "org.opencontainers.image.ref.name"
 )
 
 // A Layout allows a registry client to interact with an OCI image layout on disk.
@@ -38,9 +36,6 @@ type Layout interface {
 
 	// Push pushes the image with the given digest from the layout to the given image reference.
 	Push(digest image.Digest, name image.Name) error
-
-	// Find returns the digest of an image in the layout with the given image reference.
-	Find(n image.Name) (image.Digest, error)
 }
 
 func (r *client) NewLayout(path string) (Layout, error) {
@@ -77,19 +72,7 @@ func (r *client) ReadLayout(path string) (Layout, error) {
 
 type imageLayout struct {
 	registryClient *client
-	layoutPath     LayoutPath
-}
-
-func NewImageLayout(registryClient *client, layoutPath LayoutPath) Layout {
-	return &imageLayout{
-		registryClient: registryClient,
-		layoutPath:     layoutPath,
-	}
-}
-
-type LayoutPath interface {
-	AppendImage(img v1.Image, options ...layout.Option) error
-	ImageIndex() (v1.ImageIndex, error)
+	layoutPath     layout.Path
 }
 
 func (l *imageLayout) Add(n image.Name) (image.Digest, error) {
@@ -99,7 +82,7 @@ func (l *imageLayout) Add(n image.Name) (image.Digest, error) {
 	}
 
 	annotations := map[string]string{
-		refNameAnnotation: n.String(),
+		"org.opencontainers.image.ref.name": n.String(),
 	}
 	if err := l.layoutPath.AppendImage(img, layout.WithAnnotations(annotations)); err != nil {
 		return image.EmptyDigest, err
@@ -128,29 +111,4 @@ func (l *imageLayout) Push(digest image.Digest, n image.Name) error {
 	}
 
 	return l.registryClient.writeRemoteImage(i, n)
-}
-
-func (l *imageLayout) Find(n image.Name) (image.Digest, error) {
-	imageIndex, err := l.layoutPath.ImageIndex()
-	if err != nil {
-		return image.EmptyDigest, err
-	}
-	indexMan, err := imageIndex.IndexManifest()
-	if err != nil {
-		return image.EmptyDigest, err
-	}
-
-	for _, imageMan := range indexMan.Manifests {
-		if ref, ok := imageMan.Annotations[refNameAnnotation]; ok {
-			r, err := image.NewName(ref)
-			if err != nil {
-				return image.EmptyDigest, err
-			}
-			if r == n {
-				return image.NewDigest(imageMan.Digest.String())
-			}
-		}
-	}
-
-	return image.EmptyDigest, fmt.Errorf("image %v not found in layout", n)
 }
