@@ -18,7 +18,7 @@ func Install(b *bundle.Bundle, claimstore claim.Store) error {
 
 	// TODO - @radu-matei
 	//
-	// load paramters from the  CRD
+	// load parameters from the  CRD
 	vals := make(map[string]interface{})
 	params, err := bundle.ValuesOrDefaults(vals, b)
 	if err != nil {

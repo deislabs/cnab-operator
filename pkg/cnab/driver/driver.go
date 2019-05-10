@@ -85,16 +85,16 @@ func (d *Kubernetes) createSecret(name string, op *driver.Operation) error {
 
 // destroySecret deletes the secret that stored all envs and files
 // after the invocation image was executed
-func (d *Kubernetes) destroySecret(name string) error {
-	s := &corev1.Secret{}
-	key := client.ObjectKey{Name: name, Namespace: d.namespace}
-	err := d.client.Get(context.Background(), key, s)
-	if err != nil {
-		return fmt.Errorf("cannot get secret %v: %v", name, err)
-	}
+// func (d *Kubernetes) destroySecret(name string) error {
+// 	s := &corev1.Secret{}
+// 	key := client.ObjectKey{Name: name, Namespace: d.namespace}
+// 	err := d.client.Get(context.Background(), key, s)
+// 	if err != nil {
+// 		return fmt.Errorf("cannot get secret %v: %v", name, err)
+// 	}
 
-	return d.client.Delete(context.Background(), s)
-}
+// 	return d.client.Delete(context.Background(), s)
+// }
 
 // createPod runs the action in the invocation image as a Kubernetes pod
 func (d *Kubernetes) createPod(name string, op *driver.Operation) error {
@@ -112,7 +112,7 @@ func (d *Kubernetes) createPod(name string, op *driver.Operation) error {
 		Spec: corev1.PodSpec{
 			RestartPolicy: corev1.RestartPolicyNever,
 			Containers: []corev1.Container{
-				corev1.Container{
+				{
 					Name:         "invocationimage",
 					Image:        op.Image,
 					VolumeMounts: []corev1.VolumeMount{},
