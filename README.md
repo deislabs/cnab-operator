@@ -1,8 +1,6 @@
 # CNAB Operator
 
-🚨 This is super top secret pre-ralpha software. We would love for your to try
-it out but it probably doesn't work yet! It is just public because we love
-open-source so much private repos weird us out. 🚨
+🚨 This repository has been archived. Our operator efforts are being continued in https://github.com/getporter/operator 🚨
 
 ## Running locally
 
