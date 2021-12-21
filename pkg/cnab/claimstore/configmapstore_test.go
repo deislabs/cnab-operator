@@ -3,8 +3,8 @@ package claimstore
 import (
 	"testing"
 
-	"github.com/deislabs/duffle/pkg/claim"
-	"github.com/deislabs/duffle/pkg/utils/crud"
+	"github.com/deislabs/cnab-go/claim"
+	"github.com/deislabs/cnab-go/utils/crud"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 )
 

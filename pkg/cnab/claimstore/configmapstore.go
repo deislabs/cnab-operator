@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/deislabs/duffle/pkg/utils/crud"
+	"github.com/deislabs/cnab-go/utils/crud"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -12,7 +12,7 @@ import (
 )
 
 // ClaimLabelSelector represents the label applied to all claims
-const ClaimLabelSelector = "cnab-operator-claim"
+const ClaimLabelSelector = "claims.cnab.io/v1alpha1"
 
 // ClaimKey represents the key under which the claim is stored in the ConfigMap
 const ClaimKey = "claim"

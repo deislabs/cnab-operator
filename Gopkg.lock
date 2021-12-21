@@ -145,24 +145,20 @@
   version = "v1.1.1"
 
 [[projects]]
-  branch = "master"
-  digest = "1:cd9d8ce78d6f57728ebf25da5a956c2c0d4c730ff85033870308fef96da25ef5"
+  branch = "add-duffle-types"
+  digest = "1:2cfd7bd9ba5a1b36442ee3f75d044c99c6d4653e45de5c27c0bbe021b39f625d"
   name = "github.com/deislabs/cnab-go"
-  packages = ["bundle"]
-  pruneopts = "NT"
-  revision = "efca5437ee6aebf457a5fe6e1975c114cb2e10c8"
-
-[[projects]]
-  digest = "1:a222203ae2f42f5a3d06fde5f9746e51291567a3df8a5ebedce334cd93b7b97a"
-  name = "github.com/deislabs/duffle"
   packages = [
-    "pkg/bundle",
-    "pkg/claim",
-    "pkg/utils/crud",
+    "action",
+    "bundle",
+    "claim",
+    "credentials",
+    "driver",
+    "utils/crud",
   ]
   pruneopts = "NT"
-  revision = "dcb2e48d8864338e544cc37fdb8b421c17d0d925"
-  version = "0.1.0-ralpha.5+englishrose"
+  revision = "9cd2d85086f9a1e31ac1c59e6ec4f6bb36c2f980"
+  source = "github.com/radu-matei/cnab-go"
 
 [[projects]]
   branch = "master"
@@ -665,7 +661,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:e78a563e331612358f8639aa747195d938e26caf095408d90b7b20f6e78b3046"
+  digest = "1:e8c397477c381311a1ebd91b17266b10b6ee375625b271d2559dbabad73344e6"
   name = "github.com/operator-framework/operator-sdk"
   packages = [
     "pkg/k8sutil",
@@ -676,7 +672,7 @@
     "version",
   ]
   pruneopts = "NT"
-  revision = "c447c45f49f7075fe041ba910b632c10cc00bc8f"
+  revision = "d4a98bc5d2694f65ad6060db5c735163dd28714c"
 
 [[projects]]
   digest = "1:93b1d84c5fa6d1ea52f4114c37714cddd84d5b78f151b62bb101128dd51399bf"
@@ -703,15 +699,14 @@
   version = "v3.0.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:11844deb174b042d950d15d1ec8bd0cd1340e36dbb23e14166cd7b50a887bbbe"
+  digest = "1:9b4df2b494e5742cc30354fdbda4c843a251186bca331187f8acb3980e187fbf"
   name = "github.com/pivotal/image-relocation"
   packages = [
     "pkg/image",
     "pkg/registry",
   ]
   pruneopts = "NT"
-  revision = "3c9c32bb3d97fc213476f1c9846a99ca35ecba5d"
+  revision = "532dd0b42e7a50010d7868364309cd314a2bb376"
 
 [[projects]]
   digest = "1:14715f705ff5dfe0ffd6571d7d201dd8e921030f8070321a79380d8ca4ec1a24"
@@ -765,12 +760,12 @@
   revision = "5867b95ac084bbfee6ea16595c4e05ab009021da"
 
 [[projects]]
-  branch = "update-image-relocation"
-  digest = "1:3f900e5058da513dfc6013f4409e189009c2bda3c94f858318d3355a0c235ae7"
+  branch = "update-cnab-go-dep"
+  digest = "1:b27748a84680a7e0868f5767e408e010cbdc2c727202f94630a4877ebb50bc7b"
   name = "github.com/radu-matei/coras"
   packages = ["pkg/coras"]
   pruneopts = "NT"
-  revision = "9acccec848d196b4643a11c310a79bcab601dfab"
+  revision = "43b82e5e18c42766b0598aeb857907148437b9d9"
 
 [[projects]]
   digest = "1:a4644e85e1f29f9825a4e61dcdd8244fe7c4db02eead3f508d5a5bdf7924dbbd"
@@ -871,11 +866,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:85c335c09ff58cc10c7829a57d0dc6543c30ea033bae85231857cf48a28c3850"
+  digest = "1:b26b35b460d7db774c4aba5d2d6c7f34b5cafe0b3f3bb25faa6c49234a2a70f0"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
   pruneopts = "NT"
-  revision = "e1dfcc566284e143ba8f9afbb3fa563f2a0d212b"
+  revision = "cbcb750295291b33242907a04be40e80801d0cfc"
 
 [[projects]]
   branch = "master"
@@ -894,7 +889,7 @@
     "trace",
   ]
   pruneopts = "NT"
-  revision = "f4e77d36d62c17c2336347bb2670ddbd02d092b7"
+  revision = "a4d6f7feada510cc50e69a37b484cb0fdc6b7876"
 
 [[projects]]
   branch = "master"
@@ -923,14 +918,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:acb97a5ca6f090cd460c41481ab104271f249391456182e5f34f36702d28c52f"
+  digest = "1:0dd0b475fc1a7d536dd8250c8ea3aa928ff3370a08419af538e8621a4e08c6eb"
   name = "golang.org/x/sys"
   packages = [
     "unix",
     "windows",
   ]
   pruneopts = "NT"
-  revision = "2d0786266e9cd132da844109aa05016f11f3df28"
+  revision = "a5b02f93d862f065920dd6a40dddc66b60d0dec4"
 
 [[projects]]
   digest = "1:348fa8283a7c60b5b71ce04d27b37f7c0fce552d4d0b463b5b3ebbd1840d3f1a"
@@ -968,7 +963,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:55540a924e4d838d1cb203caea0eb94063baff32af0e2dc7686f076b42344d2e"
+  digest = "1:00deabbaf49e82bc39bd028fe3a038836d8506c47fa43f4e20a0709d1bed9a1a"
   name = "golang.org/x/tools"
   packages = [
     "go/ast/astutil",
@@ -984,15 +979,15 @@
     "internal/semver",
   ]
   pruneopts = "NT"
-  revision = "d996b19ee77cd9c8df974510f23b0696cedf1ca1"
+  revision = "73554e0f78058c37e5421bc48273a72400172221"
 
 [[projects]]
-  digest = "1:81d407dcb2347a544350b7fb394e0eb065a34c75dc235fd4c6061ea72024a485"
+  digest = "1:dcac8e614409010171dcb258c4d90d1ecc553d591fcc6dde328b6f7408bbd5bf"
   name = "google.golang.org/api"
   packages = ["support/bundler"]
   pruneopts = "NT"
-  revision = "067bed655e9cbc26f4dbac8f8897b30756d90990"
-  version = "v0.4.0"
+  revision = "721295fe20d585ce7e948146f82188429d14da33"
+  version = "v0.5.0"
 
 [[projects]]
   digest = "1:711179d92dbef98932acd7afd0dab80b4cf2d97f099f3285c9ba8fa451809fec"
@@ -1396,8 +1391,11 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/deislabs/duffle/pkg/claim",
-    "github.com/deislabs/duffle/pkg/utils/crud",
+    "github.com/deislabs/cnab-go/action",
+    "github.com/deislabs/cnab-go/bundle",
+    "github.com/deislabs/cnab-go/claim",
+    "github.com/deislabs/cnab-go/driver",
+    "github.com/deislabs/cnab-go/utils/crud",
     "github.com/go-openapi/spec",
     "github.com/operator-framework/operator-sdk/pkg/k8sutil",
     "github.com/operator-framework/operator-sdk/pkg/leader",

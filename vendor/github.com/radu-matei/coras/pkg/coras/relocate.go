@@ -70,7 +70,7 @@ func relocateImage(i *bundle.BaseImage, targetRef string, client registry.Client
 		return false, fmt.Errorf("cannot get fully qualified image name for the new image in %v: %v", targetRef, err)
 	}
 
-	dig, _, err := client.Copy(originalImage, newImage)
+	dig, err := client.Copy(originalImage, newImage)
 	if err != nil {
 		return false, fmt.Errorf("cannot copy original image %v into new image %v: %v", originalImage.Name(), newImage.Name(), err)
 	}

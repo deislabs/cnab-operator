@@ -44,10 +44,7 @@ func init() {
 // NewName returns the Name for the given image reference or an error if the image reference is invalid.
 func NewName(i string) (Name, error) {
 	ref, err := reference.ParseNormalizedNamed(i)
-	if err != nil {
-		return Name{}, fmt.Errorf("invalid image reference: %q", i)
-	}
-	return Name{ref}, nil
+	return Name{ref}, err
 }
 
 // Normalize returns a fully-qualified equivalent to the Name. Useful on synonyms.
